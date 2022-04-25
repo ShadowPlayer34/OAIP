@@ -13,7 +13,7 @@ int first_task(){
     int size = 0;
     int counter = 0;
     int *mass = new int [size];
-    ifstream file("/Users/andrejhudik/Documents/Xcode/lab12 OAIP s2/lab12 OAIP s2/read.txt");
+    ifstream file("/Users/andrejhudik/Documents/Xcode/lab12 OAIP s2/lab12 OAIP s2/read.txt");//СОЗДАТЬ ФАЙЛ С ТАКИМ ЖЕ НАЗВАНИЕМ
     if(file){
         cout << "Файл открыт\n";
         while (!file.eof()){
