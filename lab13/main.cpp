@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-
+    srand (time(NULL));
     setlocale(LC_ALL, "rus");
     int num;
     int YesOrNot = 0;
@@ -18,7 +18,8 @@ int main() {
         cout << "4. Вывод\n";
         cout << "5. Удаление элемента\n";
         cout << "6. Сортировка\n";
-        cout << "7. Exit\n";
+        cout << "7. Бинарный файл\n";
+        cout << "8. Exit\n";
         cout << "Введите число: ";
         cin >> num;
         cin.get();
@@ -52,9 +53,11 @@ int main() {
             OurMilitry = sort(OurMilitry, militaryAmount);
         }
         if (num == 7) {
+            bin_file();
+        }
+        if (num == 8) {
             break;
         }
-
     }
     return 0;
 }

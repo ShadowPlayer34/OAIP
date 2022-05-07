@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <time.h>
 using namespace std;
 struct military{
     char surname[32];
@@ -391,4 +392,177 @@ military* sort(military* Obj,  const int amount){
             break;
     }
     return Obj;
+}
+
+//-----------------------------------------------------------------
+void bin_file(){
+    fstream input1("/Users/andrejhudik/Documents/Xcode/lab 13 OAIP s2/lab 13 OAIP s2/file1.bin", ios_base::in | ios_base::binary);
+    char temp1;
+    char temp2;
+    char allmatrix1[128];
+    char mass_file1[256][256];
+    char o;
+    int counter = 0;
+    int length1 = 0;
+    int nm1 = 1;
+    int x1 = 0;
+    int h1 = 0;
+    while (input1.read(&temp1, sizeof(char))){
+        allmatrix1[counter] = temp1;
+        if (nm1%2 == 1){
+             if(temp1 != char(' ') && temp1 != char('y')){
+                o = temp1;
+                mass_file1[h1][x1] = o;
+                x1++;
+            }
+        }
+        if (temp1 == char('y')) {
+            nm1++;
+            if (nm1 % 2 == 1){
+                h1++;
+                x1 = 0;
+            }
+        }
+        counter++;
+        length1++;
+    }
+    cout << endl;
+//    for (int y = 0; y <= h1; y++) {
+//        cout << endl;
+//        for (int i = 0; i < x1; i++) {
+//            cout << mass_file1[y][i];
+//        }
+//    }
+    cout << endl;
+    counter = 0;
+    int nm2 = 1;
+    int x2 = 0;
+    int h2 = 0;
+    char allmatrix2[128];
+    int length2 = 0;
+    char mass_file2[256][256];
+    fstream input2("/Users/andrejhudik/Documents/Xcode/lab 13 OAIP s2/lab 13 OAIP s2/file2.bin", ios_base::in | ios_base::binary);
+    while (input2.read(&temp2, sizeof(char))){
+        allmatrix2[counter] = temp2;
+        if (nm2%2 == 1){
+             if(temp2 != char(' ') && temp2 != char('y')){
+//                cout << temp2;
+                o = temp2;
+                mass_file2[h2][x2] = o;
+                x2++;
+            }
+        }
+        if (temp2 == char('y')) {
+            nm2++;
+            if (nm2 % 2 == 1){
+                h2++;
+                x2 = 0;
+            }
+        }
+        counter++;
+        length2++;
+    }
+    x2 = 0;
+    x1 = 0;
+    for (int i = 0; i < 128; i++) {
+        if (mass_file2[0][i] != char('\0')) {
+            x2++;
+        }
+    }
+    for (int i = 0; i < 128; i++) {
+        if (mass_file1[0][i] != char('\0')) {
+            x1++;
+        }
+    }
+    cout << endl;
+//    for (int y = 0; y <= h2; y++) {
+//        cout << endl;
+//        for (int i = 0; i < x2; i++) {
+//            cout << mass_file2[y][i];
+//        }
+//    }
+    counter = 0;
+    int m = 0;
+    int u = 0;
+    int h = 0;
+    
+    for (int i = 0; i < length1; i++) {
+        if (mass_file1[u][m] == allmatrix1[counter]) {
+            h++;
+            m++;
+        }else{
+            h = 0;
+            m = 0;
+        }
+        counter++;
+        if (h == 4) {
+            counter = counter - 4;
+            m = 0;
+            h = 0;
+            for (int l = 0; l < x2; l++) {
+                allmatrix1[counter] = mass_file2[u][l];
+                counter++;
+            }
+            u++;
+        }
+    }
+    counter = 0;
+    m = 0;
+    u = 0;
+    h = 0;
+    for (int i = 0; i < length2; i++) {
+        if (mass_file2[u][m] == allmatrix2[counter]) {
+            h++;
+            m++;
+        }else{
+            h = 0;
+            m = 0;
+        }
+        counter++;
+        if (h == 4) {
+            counter = counter - 4;
+            m = 0;
+            h = 0;
+            for (int l = 0; l < x2; l++) {
+                allmatrix2[counter] = mass_file1[u][l];
+                counter++;
+            }
+            u++;
+        }
+    }
+    
+    
+    ofstream out("/Users/andrejhudik/Documents/Xcode/lab 13 OAIP s2/lab 13 OAIP s2/file1.bin",ios::binary|ios::out);
+         out.write((char*)&allmatrix1,sizeof allmatrix1);
+      out.close();
+    ofstream out1("/Users/andrejhudik/Documents/Xcode/lab 13 OAIP s2/lab 13 OAIP s2/file2.bin",ios::binary|ios::out);
+         out1.write((char*)&allmatrix2,sizeof allmatrix2);
+      out1.close();
+    cout << endl;
+    cout << "Матрицы первого файла: " << endl << endl;
+    cout << "Новая матрица: " << endl;
+    for (int i = 0; i < length1; i++) {
+        if (allmatrix1[i] != char('y') && allmatrix1[i] != char('n')) {
+            cout << allmatrix1[i] << "\t";
+        }else if(allmatrix1[i] == char('n')){
+            cout << endl;
+        }else if(allmatrix1[i] == char('y')){
+            cout << "\n\n" << "Новая матрица: " << endl;
+        }
+    }
+    
+    cout << endl;
+    cout << "Матрицы второго файла: " << endl << endl;
+    cout << "Новая матрица: " << endl;
+    for (int i = 0; i < length2; i++) {
+        if (allmatrix2[i] != char('y') && allmatrix2[i] != char('n')) {
+            cout << allmatrix2[i] << "\t";
+        }else if(allmatrix2[i] == char('n')){
+            cout << endl;
+        }else if(allmatrix2[i] == char('y')){
+            cout << "\n\n" << "Новая матрица: " << endl;
+        }
+    }
+    cout << "\n\n" << "Введите любой символ, чтобы выйти: ";
+    cin >> x2;
 }
